@@ -18,8 +18,8 @@ namespace GenerateJunkFiles
         {
             var rand = new Random();
             long targetSize = (long)(rand.NextDouble() * 10L * 1024L * 1024L * 1024L); // 0-10 GB
-            long targetNumber = rand.Next(1000, 1000000);
-            double averageSize = targetSize / (double)targetNumber;
+            long targetNumber = rand.Next(1000, 250000);
+            double averageSize = (targetSize - 1L * 1024L * 1024L * 1024L) / (double)targetNumber;
             while (targetNumber-- > 0)
             {
                 var size = GetRandomSize(rand, averageSize, averageSize);
