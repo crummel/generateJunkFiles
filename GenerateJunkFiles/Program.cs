@@ -23,12 +23,14 @@ namespace GenerateJunkFiles
             var filesPerFolder = 2500;
             var folderCounter = 0;
             string currentFolder = null;
+            Console.WriteLine($"Generating {targetNumber} files with total size {(targetSize / (double)(1024L * 1024L * 1024L)).ToString("F3")} GB");
             while (targetNumber-- > 0)
             {
                 if (folderCounter == 0)
                 {
                     folderCounter = filesPerFolder;
                     currentFolder = CreateNewFolder();
+                    Console.WriteLine($"{targetNumber} files with size {(targetSize / (double)(1024L * 1024L * 1024L)).ToString("F3")} GB remaining");
                 }
                 var size = GetRandomSize(rand, averageSize, averageSize);
                 targetSize -= size;
