@@ -20,21 +20,37 @@ namespace GenerateJunkFiles
             long targetSize = (long)(rand.NextDouble() * 10L * 1024L * 1024L * 1024L); // 0-10 GB
             long targetNumber = rand.Next(1000, 250000);
             double averageSize = (targetSize - 1L * 1024L * 1024L * 1024L) / (double)targetNumber;
+            var filesPerFolder = 2500;
+            var folderCounter = 0;
+            string currentFolder = null;
             while (targetNumber-- > 0)
             {
+                if (folderCounter == 0)
+                {
+                    folderCounter = filesPerFolder;
+                    currentFolder = CreateNewFolder();
+                }
                 var size = GetRandomSize(rand, averageSize, averageSize);
                 targetSize -= size;
-                CreateSparseFile(size);
+                CreateSparseFile(currentFolder, size);
+                folderCounter--;
             }
             if (targetSize > 0)
             {
-                CreateSparseFile(targetSize);
+                CreateSparseFile(currentFolder, targetSize);
             }
         }
 
-        private static void CreateSparseFile(long targetSize)
+        private static string CreateNewFolder()
         {
-            var filename = Path.GetRandomFileName();
+            var folderName = Path.GetRandomFileName().Split('.')[0];
+            Directory.CreateDirectory(folderName);
+            return folderName;
+        }
+
+        private static void CreateSparseFile(string folder, long targetSize)
+        {
+            var filename = Path.Combine(folder, Path.GetRandomFileName());
             using (var fs = File.Create(filename))
             {
                 MarkAsSparseFile(fs.SafeFileHandle);
