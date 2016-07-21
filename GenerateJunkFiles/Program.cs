@@ -21,8 +21,8 @@ namespace GenerateJunkFiles
             long targetNumber;
             if (args.Count() == 2)
             {
-                targetSize = int.Parse(args[0]);
-                targetNumber = int.Parse(args[1]);
+                targetSize = long.Parse(args[0]);
+                targetNumber = long.Parse(args[1]);
             }
             else
             {
