@@ -17,8 +17,18 @@ namespace GenerateJunkFiles
         static void Main(string[] args)
         {
             var rand = new Random();
-            long targetSize = (long)(rand.NextDouble() * 10L * 1024L * 1024L * 1024L); // 0-10 GB
-            long targetNumber = rand.Next(1000, 250000);
+            long targetSize;
+            long targetNumber;
+            if (args.Count() == 2)
+            {
+                targetSize = int.Parse(args[0]);
+                targetNumber = int.Parse(args[1]);
+            }
+            else
+            {
+                targetSize = (long)(rand.NextDouble() * 10L * 1024L * 1024L * 1024L); // 0-10 GB
+                targetNumber = rand.Next(1000, 250000);
+            }
             double averageSize = (targetSize - 1L * 1024L * 1024L * 1024L) / (double)targetNumber;
             var filesPerFolder = 2500;
             var folderCounter = 0;
